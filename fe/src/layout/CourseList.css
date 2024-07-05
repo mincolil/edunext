@@ -1,0 +1,78 @@
+.aside-menu {
+    width: 80px !important;
+    min-width: 80px !important;
+    display: block;
+    position: relative;
+
+    border-right: 1px solid rgb(239, 239, 239);
+    border-top-color: rgb(239, 239, 239);
+    border-bottom-color: rgb(239, 239, 239);
+    border-left-color: rgb(239, 239, 239);
+    transition: width 0s ease 0s, left 0s ease 0s, right 0s ease 0s, all 300ms ease 0s;
+    width: 250px;
+    min-width: 250px;
+}
+
+.side-menu {
+    position: relative;
+    height: 100%;
+    overflow: hidden auto;
+    z-index: 3;
+    background-color: rgba(249, 249, 249, 0.7);
+    font-family: inherit;
+}
+
+.wrapper {
+    display: flex;
+    position: sticky;
+}
+
+.main-content {
+
+    width: 100% !important;
+    height: 100vh !important;
+}
+
+.ul-side-menu {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+.ul-side-menu li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid rgb(239, 239, 239);
+    width: 100%;
+    position: relative;
+}
+
+.ul-side-menu li a {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 50px;
+    text-decoration: none;
+    color: inherit;
+    box-sizing: border-box;
+    cursor: pointer;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.ul-side-menu li a:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.ul-side-menu li a span {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
