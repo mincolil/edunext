@@ -58,7 +58,7 @@
       "name": "Introduction to Programming",
       "class": "SE1707-NET",
       "teacher_id": "201",
-      "semester": "SPRING2024",
+      "semester": "SUMMER2024",
       "students": [
         "101",
         "102"
@@ -69,7 +69,7 @@
       "name": "Database Management",
       "class": "SE1703-NET",
       "teacher_id": "202",
-      "semester": "SPRING2024",
+      "semester": "FALL2024",
       "students": [
         "102",
         "103"
@@ -79,7 +79,7 @@
       "id": "3",
       "name": "Statistics",
       "class": "SE1704-NET",
-      "teacher_id": "202",
+      "teacher_id": "201",
       "semester": "SPRING2024",
       "students": [
         "101"
@@ -89,29 +89,9 @@
       "id": "294e",
       "name": "test",
       "class": "123",
-      "semester": "Summer2024",
+      "semester": "SUMMER2024",
       "teacher_id": "201",
       "students": []
-    }
-  ],
-  "assignments": [
-    {
-      "id": "1",
-      "course_id": "1",
-      "name": "Assignment 1: Python Basics",
-      "due_date": "2024-07-10"
-    },
-    {
-      "id": "2",
-      "course_id": "2",
-      "name": "Database Project Proposal",
-      "due_date": "2024-07-15"
-    },
-    {
-      "id": "3",
-      "course_id": "3",
-      "name": "Statistical Analysis Presentation",
-      "due_date": "2024-07-20"
     }
   ],
   "slots": [
@@ -121,6 +101,7 @@
       "time": "10:00 AM - 12:00 PM",
       "course_id": "1",
       "teacher_id": "201",
+      "status": "on-going",
       "description": [
         "Introduction to Python programming language.",
         "Basic concepts and syntax.",
@@ -135,39 +116,64 @@
           "status": "on-going",
           "answers": [
             {
+              "id": "1",
               "student_id": "101",
-              "text": "Python is a high-level programming language known for its simplicity and readability."
+              "text": "test voting ansers",
+              "time": "04-07-2024 23:07:49",
+              "votes": {
+                "101": "2",
+                "102": "1",
+                "201": "3"
+              }
             },
             {
+              "id": "2",
               "student_id": "102",
-              "text": "Python allows for easy development of applications with its clear syntax."
+              "text": "test voting ansers for 101",
+              "time": "04-03-2024 23:07:49",
+              "votes": {
+                "101": "1",
+                "103": "5"
+              }
             },
             {
-              "student_id": "101",
-              "text": "asdasdaweqbfwikehfbieuwbfiwebfiwueh iweubf iuweb fiuwebf iweubf iwebf iw"
+              "id": "3",
+              "student_id": "103",
+              "time": "04-07-2024 23:07:49",
+              "text": "asdasdaweqbfwikehfbieuwbfiwebfiwueh iweubf iuweb fiuwebf iweubf iwebf iw",
+              "votes": {
+                "101": "4",
+                "103": "5"
+              }
             },
             {
+              "id": "ug9k",
               "student_id": "101",
-              "text": "yo oy wtf"
-            },
-            {
-              "student_id": "101",
-              "text": "asdasdasd"
+              "text": "test new answer",
+              "time": "7/11/2024, 11:03:15 AM",
+              "votes": {
+                "201": "2"
+              }
             }
           ]
         },
         {
           "id": "2",
-          "slot_id": "2",
+          "slot_id": "1",
           "text": "What are the key components of a database management system?",
           "content": "A DBMS manages databases, ensuring data integrity and providing an interface for users.",
           "status": "upcoming",
           "answers": [
             {
+              "id": "1",
               "student_id": "102",
-              "text": "A DBMS manages databases, ensuring data integrity and providing an interface for users."
+              "text": "A DBMS manages databases, ensuring data integrity and providing an interface for users.",
+              "votes": {
+                "101": "4"
+              }
             },
             {
+              "id": "2",
               "student_id": "103",
               "text": "DBMS includes schema definition, query language, and transaction management."
             }
@@ -175,20 +181,23 @@
         },
         {
           "id": "3",
-          "slot_id": "2",
+          "slot_id": "1",
           "text": "What are the key comp=",
           "content": "A DBMS manages databas",
           "status": "completed",
           "answers": [
             {
+              "id": "1",
               "student_id": "102",
               "text": "A DBMS manages databases, ensuring data integrity and providing an interface for users."
             },
             {
+              "id": "2",
               "student_id": "103",
               "text": "DBMS includes schema definition, query language, and transaction management."
             },
             {
+              "id": "3",
               "student_id": "101",
               "text": "con ca\n"
             }
@@ -205,13 +214,22 @@
           "submissions": [
             {
               "student_id": "101",
-              "submission_text": "Completed the assignment on time."
+              "submission_text": "qwdqwdwqd",
+              "score": 5
             },
             {
+              "id": "2",
               "student_id": "102",
-              "submission_text": "Submitted the assignment with minor errors."
+              "submission_text": "Submitted the assignment with minor errors.",
+              "score": 7
+            },
+            {
+              "student_id": "201",
+              "submission_text": "qwdqwdwqd",
+              "score": 9
             }
-          ]
+          ],
+          "score": 7
         }
       ]
     },
@@ -219,22 +237,43 @@
       "id": "2",
       "day": "Wednesday",
       "time": "02:00 PM - 04:00 PM",
-      "course_id": "2",
+      "course_id": "1",
       "teacher_id": "202",
+      "status": "completed",
       "description": [
-        "Introduction to Python programming language.",
+        "Introduction to Python programming language. COMPLETED",
         "Basic concepts and syntax.",
         "Hands-on coding exercises."
       ],
-      "questions": [],
+      "questions": [
+        {
+          "id": "jkyg",
+          "text": "hola love",
+          "content": "adsdasddas",
+          "slot_id": "2",
+          "status": "on-going",
+          "answers": [
+            {
+              "id": "ov4f",
+              "student_id": "101",
+              "text": "qwdqwd",
+              "time": "7/11/2024, 11:26:53 AM",
+              "votes": {
+                "201": "3"
+              }
+            }
+          ]
+        }
+      ],
       "assignments": []
     },
     {
       "id": "3",
       "day": "Friday",
       "time": "09:00 AM - 11:00 AM",
-      "course_id": "3",
-      "teacher_id": "202",
+      "course_id": "1",
+      "teacher_id": "201",
+      "status": "not-started",
       "description": [
         "Introduction to Python programming language.",
         "Basic concepts and syntax.",
@@ -249,6 +288,7 @@
       "time": "10:00 AM - 12:00 PM",
       "course_id": "1",
       "teacher_id": "201",
+      "status": "on-going",
       "description": [
         "Introduction to Python programming language.",
         "Basic concepts and syntax.",
@@ -263,6 +303,7 @@
       "time": "10:00 AM - 12:00 PM",
       "course_id": "1",
       "teacher_id": "201",
+      "status": "on-going",
       "description": [
         "Introduction to Python programming language.",
         "Basic concepts and syntax.",
@@ -277,6 +318,7 @@
       "time": "10:00 AM - 12:00 PM",
       "course_id": "1",
       "teacher_id": "201",
+      "status": "on-going",
       "description": [
         "Introduction to Python programming language.",
         "Basic concepts and syntax.",
@@ -286,21 +328,96 @@
       "assignments": []
     },
     {
-      "id": "75c1",
+      "id": "8030",
       "description": "asdasd",
-      "time": "7/8/2024 10h00 - 12h20",
+      "time": "7/11/2024 12h50 - 15h20",
       "teacher_id": "201",
-      "course_id": "294e",
+      "course_id": "201",
+      "status": "on-going",
       "questions": [],
       "assignments": []
     },
     {
-      "id": "77e5",
-      "text": "adsasdaasdasd",
-      "content": "adsdasddas",
-      "slot_id": "1",
-      "status": "on-going",
-      "answer": []
+      "id": "ef85",
+      "description": "asdasd",
+      "time": " 10h00 7/19/2024  - 12h20 7/19/2024",
+      "teacher_id": "201",
+      "course_id": "294e",
+      "questions": [
+        {
+          "id": "v0r0",
+          "text": "course2 slot2",
+          "content": "adqwdqwdqwd",
+          "slot_id": "ef85",
+          "status": "on-going",
+          "answers": []
+        }
+      ],
+      "assignments": [
+        {
+          "id": "948i",
+          "text": "yoyoyoy ass1 slot 2 course 2",
+          "content": "adsdasddas",
+          "due_date": "7/25/2024",
+          "slot_id": "ef85",
+          "status": "on-going",
+          "submissions": []
+        }
+      ]
+    },
+    {
+      "id": "dfe2",
+      "description": "slot 1 babe",
+      "time": " 10h00 7/19/2024  - 12h20 7/19/2024",
+      "teacher_id": "201",
+      "course_id": "3",
+      "questions": [
+        {
+          "id": "7mpg",
+          "text": "quesslot1vcour2",
+          "content": "dasdasd asdasd asd asd",
+          "slot_id": "dfe2",
+          "status": "on-going",
+          "answers": []
+        },
+        {
+          "id": "y87w",
+          "text": "quest test load page2",
+          "content": "dwdw",
+          "slot_id": "dfe2",
+          "status": "on-going",
+          "answers": []
+        }
+      ],
+      "assignments": [
+        {
+          "id": "kwhg",
+          "text": "asss23 ",
+          "content": "dasdasd asdasd asd asd trjrtyj",
+          "due_date": "7/19/2024",
+          "slot_id": "dfe2",
+          "status": "on-going",
+          "submissions": []
+        }
+      ]
+    },
+    {
+      "id": "fa26",
+      "description": "slot 2wqeqwe",
+      "time": " 7h30 7/11/2024  - 9h50 7/11/2024",
+      "teacher_id": "201",
+      "course_id": "3",
+      "questions": [
+        {
+          "id": "yq4t",
+          "text": "quest test load page2",
+          "content": "dwdw",
+          "slot_id": "fa26",
+          "status": "on-going",
+          "answers": []
+        }
+      ],
+      "assignments": []
     }
   ]
 }

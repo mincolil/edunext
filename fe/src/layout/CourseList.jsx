@@ -1,122 +1,213 @@
 //import all necessary modules
-import React from 'react';
-import { Button, Grid, Paper, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect, useState } from 'react';
+import { Button, ButtonBase, Grid, Paper, Typography } from '@material-ui/core';
 import './CourseList.css'
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import UpcomingIcon from '@mui/icons-material/Upcoming';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import './Icon.css'
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabPanel from '@mui/lab/TabPanel';
+import Tabs from '@mui/material/Tabs';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import SideMenu from '../components/SideMenu';
+import axios from 'axios';
+import AddCourseModal from '../components/Modal/CreateCourseModal';
 
 
-const useStyles = makeStyles({
-    root: {
-        padding: 20,
-    },
-    header: {
-        marginBottom: 20,
-    },
-    courseInfo: {
-        marginBottom: 20,
-    },
-    courseDetails: {
-        marginBottom: 20,
-    },
-    button: {
-        marginTop: 20,
-    },
-});
+function CardItem({ course }) {
+    return (
+        <Grid item md={3} xs={8} className="course-item" style={{ zIndex: '9999', marginBottom: '20px' }}>
+            {/* <div className="course-item col-md-4 col-sm-6 col-lg-3" style={{ zIndex: '9999', marginBottom: '20px', width: '200px' }}> */}
+            <div className='wrap-course-item'>
+                <div className='course-info'>
+                    <h3 class="course-title mg-b-15 fs-18">
+                        <a href={`/courses/${course.id}`}>
+                            <span class="title">{course.name}</span>
+                        </a>
+                    </h3>
+
+                    <ul className='bottom-course-sum none-list'>
+                        <li>
+                            <i class="las la-chalkboard-teacher"></i>
+                            <span title="SE1707-NET" className="text-ellipsis" value="SE1707-NET">{course.class}</span>
+                        </li>
+                        <li>
+                            <i class="las la-user-circle"></i>
+                            <span title="SE1707-NET" className="text-ellipsis" value="SE1707-NET">edu_next_ltr_fpt_edu_{course.teacher_id}</span>
+                        </li>
+                        <li>
+                            <i class="las la-id-card"></i>
+                            <span title="SE1707-NET" className="text-ellipsis" value="SE1707-NET">Number of student: {course.students.length}</span>
+                        </li>
+                    </ul>
+
+                    <a class="view-detail text-decoration-none" title="Go to course" href={`/courses/${course.id}`}>
+                        <span title="Go to course" value="Go to course">Go to course</span>
+                        <i class="las la-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            {/* </div> */}
+        </Grid>
+    )
+}
 
 
 export default function CourseList() {
+    const [value, setValue] = useState('course');
+    const [age, setAge] = useState('');
+    const [listCourse, setListCourse] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
+    const [course, setCourse] = useState({})
+
+    const handleLoadCourse = async (age) => {
+        if (age) {
+            console.log(age);
+            try {
+                const response = await axios.get(`/courses`);
+                let data = response.data.filter(course => course.semester === age);
+                if (localStorage.getItem("role") === "teacher") {
+                    data = data.filter(course => course.teacher_id === localStorage.getItem("userId"));
+                    setListCourse(data);
+                    return;
+                }
+                data = data.filter(course => course.students.includes(localStorage.getItem("userId")));
+                console.log(data);
+                setListCourse(data);
+                return;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        try {
+            const response = await axios.get("/courses");
+            if (localStorage.getItem("role") === "teacher") {
+                const data = response.data.filter(course => course.teacher_id === localStorage.getItem("userId"));
+                setListCourse(data);
+                return;
+            }
+            const data = response.data.filter(course => course.students.includes(localStorage.getItem("userId")));
+            console.log(data);
+            setListCourse(data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        setValue('course');
+        handleLoadCourse();
+    }, []);
+
+    useEffect(() => {
+        handleLoadCourse(age);
+    }, [age]);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    const handleChangeAge = (event) => {
+        setAge(event.target.value);
+    };
+
+    const handleOpenModal = () => {
+        setOpenModal(true);
+        handleLoadCourse();
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+        handleLoadCourse();
+    };
 
     return (
         <div>
             <div className="wrapper">
-                <aside style={{ width: '250px', float: 'left' }} className="aside-menu">
-                    <div className="side-menu">
-                        <nav>
-                            <ul className="ul-side-menu" style={{ padding: '0px' }}>
-                                <div style={{ textAlign: 'center', width: '100%' }}>
-                                    <a style={{ textDecoration: 'underline' }}>
-                                        <img src="https://edunext.fpt.edu.vn/assets/logo-home-Djb_K2V0.png" style={{ width: '100%' }}></img>
-                                    </a>
-                                </div>
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <div className='logo-side-menu' style={{ textAlign: 'center', fontSize: '0.625rem' }}>
-                                                <AccountCircleIcon style={{ fontSize: '1.5rem' }} />
-                                            </div>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <div className='logo-side-menu' style={{ textAlign: 'center', fontSize: '0.625rem' }}>
-                                                <HomeOutlinedIcon style={{ fontSize: '1.5rem' }} />
-                                            </div>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <div className='logo-side-menu' style={{ textAlign: 'center', fontSize: '0.625rem' }}>
-                                                <AssignmentIcon style={{ fontSize: '1.5rem' }} />
-                                            </div>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <div className='logo-side-menu' style={{ textAlign: 'center', fontSize: '0.625rem' }}>
-                                                <UpcomingIcon style={{ fontSize: '1.5rem' }} />
-                                            </div>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <div className='logo-side-menu' style={{ textAlign: 'center', fontSize: '0.625rem' }}>
-                                                <PictureAsPdfIcon style={{ fontSize: '1.5rem' }} />
-                                            </div>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <div className='logo-side-menu' style={{ textAlign: 'center', fontSize: '0.625rem' }}>
-                                                <SupportAgentIcon style={{ fontSize: '1.5rem' }} />
-                                            </div>
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <span>
-                                            <div className='logo-side-menu' style={{ textAlign: 'center', fontSize: '0.625rem' }}>
-                                                <LiveHelpIcon style={{ fontSize: '1.5rem' }} />
-                                            </div>
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </aside>
-
+                <SideMenu />
                 <div className="main-content">
+                    <div className='site-main' style={{ padding: '20px', flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <div className='container'>
+                            <div className='lesson-detail-tab edu-tabs'>
+                                <TabContext value={value}>
+                                    <Tabs
+                                        value={value}
+                                        onChange={handleChange}
+                                        textColor="primary"
+                                        indicatorColor="primary"
+                                        aria-label="secondary tabs example"
+                                        className='edu-tabs-header'
+                                    >
+                                        <Tab value="course" label="Course" />
+                                        <Tab value="project" label="Project" />
+                                    </Tabs>
+                                    <TabPanel value="course" style={{ padding: '0px' }}>
+                                        <Grid container spacing={2}>
+                                            <div className='list-course row' style={{ margin: 'auto' }}>
+                                                <div>
+                                                    <div className="col-md-4 col-sm-6 col-lg-3" style={{ zIndex: '9999', marginBottom: '20px', width: '200px' }}>
+
+                                                        {localStorage.getItem("role") === "teacher" && (
+                                                            <div style={{ paddingBottom: '20px' }}>
+                                                                <Button variant="contained" color="primary" style={{ marginLeft: '10px' }} onClick={handleOpenModal}>
+                                                                    Add new Course
+                                                                </Button>
+                                                            </div>
+                                                        )}
+
+
+
+                                                        <div className='edu-combobox' style={{ unicodeBidi: 'isolate', boxSizing: 'border-box', textAlign: 'start', textSizeAdjust: '100%' }}>
+                                                            <FormControl sx={{ m: 1, minWidth: 200, margin: '0px' }} size="small">
+                                                                <InputLabel id="demo-select-small-label">Semester</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-select-small-label"
+                                                                    id="demo-select-small"
+                                                                    value={age}
+                                                                    label="Age"
+                                                                    onChange={handleChangeAge}
+                                                                >
+                                                                    <MenuItem>
+                                                                        <em>ALL</em>
+                                                                    </MenuItem>
+                                                                    <MenuItem value={"SPRING2024"}>SPRING</MenuItem>
+                                                                    <MenuItem value={"SUMMER2024"}>SUMMER</MenuItem>
+                                                                    <MenuItem value={"FALL2024"}>FALL</MenuItem>
+                                                                    <MenuItem value={"WINTER2024"}>WINTER</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </div>
+                                                    </div>
+
+                                                    <div style={{ marginBottom: '10px' }}>
+                                                        <div className="recently mb-2">Recently Updated (Để xem chi tiết về các thay đổi cập nhật gần đây, vui lòng nhấp vào đây)<br />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {listCourse && listCourse.map((course, index) => (
+                                                    <CardItem key={index} course={course} />
+                                                ))}
+
+                                            </div>
+                                        </Grid>
+                                    </TabPanel>
+                                </TabContext>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div >
-        </div>
 
-    )
+            {/* Modal Component */}
+            <AddCourseModal
+                open={openModal}
+                handleClose={handleCloseModal}
+                onCreate={() => handleLoadCourse()}
+            />
+        </div >
+    );
 };
