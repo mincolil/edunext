@@ -15,18 +15,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import SideMenu from '../components/SideMenu';
 import axios from 'axios';
 import AddCourseModal from '../components/Modal/CreateCourseModal';
+import { notification } from "antd";
 
 
-function CardItem({ course }) {
+function CardItem({ course, all, handleEnrollCourse }) {
     return (
         <Grid item md={3} xs={8} className="course-item" style={{ zIndex: '9999', marginBottom: '20px' }}>
             {/* <div className="course-item col-md-4 col-sm-6 col-lg-3" style={{ zIndex: '9999', marginBottom: '20px', width: '200px' }}> */}
             <div className='wrap-course-item'>
                 <div className='course-info'>
                     <h3 class="course-title mg-b-15 fs-18">
-                        <a href={`/courses/${course.id}`}>
-                            <span class="title">{course.name}</span>
-                        </a>
+                        check all null
+                        {all ? (
+                            <a>
+                                <span className="title">{course.name}</span>
+                            </a>
+                        ) : (
+                            <a href={`/courses/${course.id}`}>
+                                <span className="title">{course.name}</span>
+                            </a>
+                        )}
+
                     </h3>
 
                     <ul className='bottom-course-sum none-list'>
@@ -44,10 +53,19 @@ function CardItem({ course }) {
                         </li>
                     </ul>
 
-                    <a class="view-detail text-decoration-none" title="Go to course" href={`/courses/${course.id}`}>
-                        <span title="Go to course" value="Go to course">Go to course</span>
-                        <i class="las la-arrow-right"></i>
-                    </a>
+                    {!all ? (
+                        <a class="view-detail text-decoration-none" title="Go to course" href={`/courses/${course.id}`}>
+
+                            <span title="Go to course" value="Go to course">Go to course</span>
+                            <i class="las la-arrow-right"></i>
+                        </a>
+                    ) : (
+                        <a class="view-detail text-decoration-none" title="Go to course" onClick={handleEnrollCourse}>
+                            <span title="Enroll Course" value="Go to course">Enroll Course</span>
+                            <i class="las la-arrow-right"></i>
+                        </a>
+                    )}
+
                 </div>
             </div>
             {/* </div> */}
@@ -61,11 +79,18 @@ export default function CourseList() {
     const [age, setAge] = useState('');
     const [listCourse, setListCourse] = useState([]);
     const [openModal, setOpenModal] = useState(false);
-    const [course, setCourse] = useState({})
+    const [allCourse, setAllCourse] = useState([])
+    const [api, contextHolder] = notification.useNotification();
+
+    const openNotificationWithIcon = (type, mess) => {
+        api[type]({
+            message: 'Notification Title',
+            description: mess
+        });
+    };
 
     const handleLoadCourse = async (age) => {
         if (age) {
-            console.log(age);
             try {
                 const response = await axios.get(`/courses`);
                 let data = response.data.filter(course => course.semester === age);
@@ -97,8 +122,44 @@ export default function CourseList() {
         }
     };
 
+    const handleLoadAllCourse = async () => {
+        try {
+            const response = await axios.get("/courses");
+            console.log(response.data);
+            setAllCourse(response.data);
+        } catch (error) {
+            console.error(error
+            );
+        }
+    }
+
+    const handleEnroll = async (courseId) => {
+        console.log(courseId);
+        console.log(localStorage.getItem("userId"));
+        try {
+            const response = await axios.get(`/courses/${courseId}`);
+
+            if (response) {
+                //check if student already enroll course
+                if (response.data.students.includes(localStorage.getItem("userId"))) {
+                    openNotificationWithIcon('error', 'You already enroll this course');
+                    return;
+                }
+                const course = response.data;
+                course.students.push(localStorage.getItem("userId"));
+                await axios.put(`/courses/${courseId}`, course);
+                handleLoadCourse();
+                openNotificationWithIcon('success', 'Enroll course successfully');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
     useEffect(() => {
         setValue('course');
+        handleLoadAllCourse();
         handleLoadCourse();
     }, []);
 
@@ -126,6 +187,7 @@ export default function CourseList() {
 
     return (
         <div>
+            {contextHolder}
             <div className="wrapper">
                 <SideMenu />
                 <div className="main-content">
@@ -141,8 +203,8 @@ export default function CourseList() {
                                         aria-label="secondary tabs example"
                                         className='edu-tabs-header'
                                     >
-                                        <Tab value="course" label="Course" />
-                                        <Tab value="project" label="Project" />
+                                        <Tab value="course" label="My Course" />
+                                        <Tab value="all" label="All" />
                                     </Tabs>
                                     <TabPanel value="course" style={{ padding: '0px' }}>
                                         <Grid container spacing={2}>
@@ -190,6 +252,23 @@ export default function CourseList() {
 
                                                 {listCourse && listCourse.map((course, index) => (
                                                     <CardItem key={index} course={course} />
+                                                ))}
+
+                                            </div>
+                                        </Grid>
+                                    </TabPanel>
+                                    <TabPanel value="all" style={{ padding: '0px' }}>
+                                        <Grid container spacing={2}>
+                                            <div className='list-course row' style={{ margin: 'auto' }}>
+                                                <div>
+                                                    <div style={{ marginBottom: '10px' }}>
+                                                        <div className="recently mb-2">Recently Updated (Để xem chi tiết về các thay đổi cập nhật gần đây, vui lòng nhấp vào đây)<br />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {allCourse && allCourse.map((course, index) => (
+                                                    <CardItem key={index} course={course} all={1} handleEnrollCourse={() => handleEnroll(course.id)} />
                                                 ))}
 
                                             </div>

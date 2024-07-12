@@ -38,7 +38,7 @@ const AddAssignmentModal = ({ open, handleClose, onCreate, slotId }) => {
                 const slot = response.data;
                 slot.assignments.push(newAssignment);
                 axios.put(`/slots/${slotId}`, slot);
-                onCreate();
+
             });
         } catch (error) {
             console.error(error);
@@ -46,6 +46,7 @@ const AddAssignmentModal = ({ open, handleClose, onCreate, slotId }) => {
 
         handleClose();
         //reload page
+        onCreate();
         window.location.reload();
     };
 

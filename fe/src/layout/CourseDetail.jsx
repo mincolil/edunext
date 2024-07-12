@@ -339,8 +339,10 @@ export default function CourseDetail({ }) {
                                                             <Button variant="contained" size="large" color='primary'>Assignments</Button>
                                                         </div> */}
                                                         {localStorage.getItem("role") === "teacher" && (
-                                                            <div className='learning-materials'>
-                                                                <Button variant="contained" size="large" color='primary' onClick={handleOpenModal}>Add Slot</Button>
+                                                            <div>
+                                                                <div className='learning-materials'>
+                                                                    <Button variant="contained" size="large" color='primary' onClick={handleOpenModal}>Add Slot</Button>
+                                                                </div>
                                                             </div>
                                                         )}
                                                         <br />

@@ -36,7 +36,7 @@ const AddQuestionModal = ({ open, handleClose, onCreate, slotId }) => {
                 const slot = response.data;
                 slot.questions.push(newQuestion);
                 axios.put(`/slots/${slotId}`, slot);
-                onCreate();
+
             });
 
         } catch (error) {
@@ -44,6 +44,7 @@ const AddQuestionModal = ({ open, handleClose, onCreate, slotId }) => {
         }
         handleClose();
         //reload page
+        onCreate();
         window.location.reload();
     };
 
